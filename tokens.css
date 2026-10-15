@@ -1,0 +1,33 @@
+:root {
+  --color-paper: oklch(98.5% 0.004 250);
+  --color-surface: oklch(99.7% 0.002 250);
+  --color-ink: oklch(24% 0.02 258);
+  --color-body: oklch(34% 0.018 257);
+  --color-muted: oklch(49% 0.02 258);
+  --color-rule: oklch(89% 0.012 250);
+  --color-subtle: oklch(95% 0.01 250);
+  --color-accent: oklch(50% 0.2 256);
+  --color-accent-ink: oklch(99% 0.002 250);
+  --color-active: oklch(95% 0.025 256);
+  --color-good: oklch(42% 0.115 160);
+  --color-good-bg: oklch(96% 0.025 160);
+  --color-error: oklch(47% 0.17 25);
+  --color-error-bg: oklch(96% 0.025 25);
+  --color-graphite: oklch(22% 0.016 260);
+  --color-log: oklch(87% 0.014 250);
+  --color-focus: oklch(30% 0.09 256);
+  --font-display: "Space Grotesk", "Avenir Next", "PingFang SC", sans-serif;
+  --font-body:
+    Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --text-sm: 12px;
+  --text-md: 14px;
+}

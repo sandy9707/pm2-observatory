@@ -1,0 +1,14 @@
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+coverage/
+backups/
+local/
+CLAUDE.local.md
+*.pem
+*.key
+*.p12
+dump.pm2*

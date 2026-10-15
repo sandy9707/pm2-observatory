@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PM2 Observatory · 本机进程</title>
+    <link rel="stylesheet" href="/tokens.css" />
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="/"
+        ><span class="brand-mark">P<span>2</span></span
+        ><span>PM2 <strong>Observatory</strong></span></a
+      >
+      <div class="header-meta">
+        <span class="local-label">LOCAL</span
+        ><span id="connection" role="status">正在连接</span>
+      </div>
+    </header>
+    <main>
+      <section class="heading">
+        <div>
+          <p class="eyebrow">PROCESS INTELLIGENCE</p>
+          <h1>本机服务与进程<span class="title-dot">.</span></h1>
+          <p class="subtitle" id="subtitle">
+            连接本机 PM2 实例，读取实时运行数据。
+          </p>
+        </div>
+        <div class="actions">
+          <button id="pause">暂停刷新</button
+          ><button id="refresh" class="primary">立即刷新 ↻</button
+          ><button id="export">导出 JSON ↓</button>
+        </div>
+      </section>
+      <div id="error" class="notice" role="alert" hidden></div>
+      <section class="workspace">
+        <div class="process-panel">
+          <div class="panel-top">
+            <h2>
+              全部服务与进程 <span id="processCount" class="count">—</span>
+            </h2>
+            <span class="muted">点击进程查看详情</span>
+          </div>
+          <div class="filters">
+            <label class="search-field"
+              >搜索进程 <span class="muted">⌘ K</span
+              ><input
+                id="search"
+                type="search"
+                placeholder="名称 / PID / 端口" /></label
+            ><label
+              >来源<select id="instance">
+                <option value="">全部实例</option>
+              </select></label
+            ><label
+              >状态<select id="status">
+                <option value="">全部状态</option>
+                <option value="online">运行中</option>
+                <option value="offline">未运行</option>
+              </select></label
+            ><label
+              >排序<select id="sort">
+                <option value="services">服务优先</option>
+                <option value="name">名称</option>
+                <option value="cpu">CPU ↓</option>
+                <option value="memory">内存 ↓</option>
+                <option value="restarts">重启次数 ↓</option>
+              </select></label
+            >
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>进程 / 来源</th>
+                  <th>状态</th>
+                  <th>CPU</th>
+                  <th>内存</th>
+                  <th>运行时长</th>
+                  <th>重启</th>
+                  <th>访问链接</th>
+                </tr>
+              </thead>
+              <tbody id="rows">
+                <tr>
+                  <td colspan="7" class="empty">正在加载 PM2 进程…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <aside id="detail" class="detail">
+          <div class="detail-placeholder">
+            <span class="detail-symbol">↗</span>
+            <h2>深入查看一个进程</h2>
+            <p>从左侧选择进程，查看配置、监控指标和完整 PM2 字段。</p>
+          </div>
+        </aside>
+      </section>
+      <section id="stats" class="stats" aria-label="运行概况">
+        <div class="stat">
+          <span>进程总数</span><strong>—</strong><small>等待 PM2 数据</small>
+        </div>
+      </section>
+      <section class="monitor" aria-label="资源监控">
+        <div class="chart-panel">
+          <div class="panel-top">
+            <div>
+              <h2>资源趋势</h2>
+              <span class="muted">PM2 进程合计 · 最近 60 分钟</span>
+            </div>
+            <span class="legend"
+              ><i></i> CPU <i class="memory-dot"></i> 内存</span
+            >
+          </div>
+          <div class="chart-values">
+            <span id="cpuValue">—</span><span id="memoryValue">—</span>
+          </div>
+          <svg
+            id="chart"
+            viewBox="0 0 900 128"
+            preserveAspectRatio="none"
+            role="img"
+            aria-label="PM2 进程 CPU 与内存历史趋势"
+          ></svg>
+          <div class="chart-axis">
+            <span id="chartStart">等待采样</span><span>现在</span>
+          </div>
+        </div>
+        <div class="machine">
+          <p class="eyebrow">THIS MACHINE</p>
+          <h2 id="hostname">—</h2>
+          <dl id="hostDetails"></dl>
+        </div>
+      </section>
+
+      <section class="logs">
+        <div class="panel-top">
+          <div>
+            <h2>实时日志</h2>
+            <p id="logSource" class="muted">选择一个进程后查看日志</p>
+          </div>
+          <div class="log-controls">
+            <label class="visually-hidden" for="logKind">日志类型</label
+            ><select id="logKind">
+              <option value="out">标准输出</option>
+              <option value="error">错误日志</option>
+              <option value="daemon">PM2 守护日志</option></select
+            ><label class="visually-hidden" for="logLines">日志行数</label
+            ><select id="logLines">
+              <option value="200">最近 200 行</option>
+              <option value="500">最近 500 行</option>
+              <option value="1000">最近 1000 行</option></select
+            ><button id="copyLog" disabled>复制日志</button>
+          </div>
+        </div>
+        <pre id="logText" tabindex="0">等待选择进程。</pre>
+        <div class="log-footer">
+          <span id="logInfo">每 3 秒读取日志末尾 · 单次最多 128 KiB</span
+          ><label><input type="checkbox" id="follow" checked /> 跟随最新</label>
+        </div>
+      </section>
+      <section class="instances">
+        <div class="panel-top">
+          <h2>PM2 实例</h2>
+          <span class="muted">自动发现本机运行中的守护进程</span>
+        </div>
+        <div id="instances"></div>
+      </section>
+      <footer>
+        <span>PM2 Observatory · 本地只读监控</span
+        ><span id="updated">尚未更新</span><span>历史数据保存在内存中</span>
+      </footer>
+    </main>
+  </body>
+</html>
