@@ -12,6 +12,9 @@ const pm2 = execFileSync("/usr/bin/which", ["pm2"], {
 const label = "io.github.sandy9707.pm2-observatory";
 const local = path.join(root, "local");
 fs.mkdirSync(local, { recursive: true });
+// launchd can reject a Documents/external-volume cwd or log destination before spawning.
+const logs = path.join(os.homedir(), "Library", "Logs", "pm2-observatory");
+fs.mkdirSync(logs, { recursive: true });
 const esc = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -38,15 +41,15 @@ const plist = `<?xml version="1.0" encoding="UTF-8"?>
 <plist version="1.0"><dict>
 <key>Label</key><string>${label}</string>
 <key>ProgramArguments</key><array>${args.map((s) => "<string>" + esc(s) + "</string>").join("")}</array>
-<key>WorkingDirectory</key><string>${esc(root)}</string>
+<key>WorkingDirectory</key><string>${esc(os.homedir())}</string>
 <key>RunAtLoad</key><true/>
 <key>EnvironmentVariables</key><dict>
 <key>PATH</key><string>${esc([path.dirname(process.execPath), path.dirname(pm2), "/opt/homebrew/bin", "/usr/local/bin", "/usr/bin", "/bin"].join(":"))}</string>
 <key>PM2_HOME</key><string>${esc(process.env.PM2_HOME || path.join(os.homedir(), ".pm2"))}</string>
 <key>DASHBOARD_PORT</key><string>${esc(process.env.DASHBOARD_PORT || "7000")}</string>
 </dict>
-<key>StandardOutPath</key><string>${esc(path.join(local, "launchagent.out.log"))}</string>
-<key>StandardErrorPath</key><string>${esc(path.join(local, "launchagent.err.log"))}</string>
+<key>StandardOutPath</key><string>${esc(path.join(logs, "login.out.log"))}</string>
+<key>StandardErrorPath</key><string>${esc(path.join(logs, "login.err.log"))}</string>
 </dict></plist>
 `;
 const dir = path.join(os.homedir(), "Library", "LaunchAgents");

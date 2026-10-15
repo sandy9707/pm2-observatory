@@ -14,3 +14,5 @@
 - Regression to avoid: beginning discovery before binding the dashboard socket misattributes the first port scan.
 
 Automated checks: npm test. UI checks: services first, source filters, escaped names/paths, details/log selection, export, error recovery, 320/375/414/768/1440 px widths, no page exceptions.
+
+Fixed in v1.0.1: launchd EX_CONFIG (78) when startup cwd/logs are placed in a restricted Documents path. The job now starts from the user home and writes logs to Library/Logs, while the app keeps its source cwd.

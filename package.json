@@ -1,6 +1,6 @@
 {
   "name": "pm2-observatory",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "A local-first macOS dashboard for PM2 daemons and TCP listening services.",
   "license": "MIT",

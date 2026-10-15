@@ -75,5 +75,7 @@ pm2 delete pm2-observatory
 - 本机服务扫描失败：在相同用户下运行 `/usr/sbin/lsof -nP -iTCP -sTCP:LISTEN`，确认系统权限。
 - 非 PM2 没日志：设计如此。只提供 PM2 已报告的日志路径，避免任意文件读取。
 - 外置卷未挂载：先挂载原路径，再启动服务；若路径变更，重新安装启动项。
-- 登录启动失败：查看 `local/launchagent.err.log` 和 `launchctl print gui/$(id -u)/io.github.sandy9707.pm2-observatory`。
+- 登录启动失败：查看 `$HOME/Library/Logs/pm2-observatory/login.err.log` 和 `launchctl print gui/$(id -u)/io.github.sandy9707.pm2-observatory`。
 - GitHub CI 与本机不同：测试应适应 0 个 PM2 实例，不要把真实机器进程数写进断言。
+
+登录启动项的工作目录使用用户 home，启动日志写入 Library/Logs。不要将这两项改到 Documents 或受限外置目录：launchd 可能在启动程序前直接以 EX_CONFIG (78) 退出。应用自身仍使用源码目录作为 cwd。

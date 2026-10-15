@@ -7,8 +7,8 @@
 - Source OS: macOS (Apple Silicon).
 - Destination OS: macOS (Apple Silicon); machine-specific paths stay in local/DEPLOYMENT.md.
 - Repository: https://github.com/sandy9707/pm2-observatory
-- Branch/tag: main / v1.0.0.
-- Last verified commit: the commit referenced by tag v1.0.0; resolve with `git rev-parse v1.0.0`. Deployment-specific exact hashes belong in local/DEPLOYMENT.md.
+- Branch/tag: main / v1.0.1.
+- Last verified commit: the commit referenced by tag v1.0.1; resolve with `git rev-parse v1.0.1`. Deployment-specific exact hashes belong in local/DEPLOYMENT.md.
 
 ## Current project goal
 
